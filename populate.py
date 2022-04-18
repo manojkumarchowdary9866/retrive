@@ -3,8 +3,10 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE','project26.settings')
 import django
 django.setup()
 import random
+
 from faker import Faker
 f=Faker()
+
 from app.models import *
 topics=['cricket','football','vollyball','kabaddi','basketball']
 def add_topic():
