@@ -14,7 +14,7 @@ def display_topic(request):
 
 def display_webpage(request):
     webpages=webpage.objects.all()
-    #webpages=webpage.objects.filter(topic_name='football')
+    webpages=webpage.objects.filter(topic_name='football')
 
     #webpages=webpage.objects.exclude(topic_name='football')
     #webpages=Webpage.objects.all()[0:2:]
@@ -29,7 +29,7 @@ def display_webpage(request):
     #webpages=webpage.objects.filter(name__in=('dhoni','Thomas'))
     #webpages=webpage.objects.filter(name__regex=r'^[a-zA-Z]{2}o')
     #webpages=webpage.objects.filter(Q(topic_name='football') & Q(name='James'))
-    webpages=webpage.objects.filter(Q(topic_name='football') & Q(url__startswith='https') & Q(name__endswith='s'))
+    #webpages=webpage.objects.filter(Q(topic_name='football') & Q(url__startswith='https') & Q(name__endswith='s'))
 
     d={'ws':webpages}
     return render(request,'display_webpage.html',d)
@@ -47,3 +47,23 @@ def display_access(request):
     access=AccessRecord.objects.filter(date__day='28')
     d={'ac':access}
     return render(request,'display_access.html',d)
+def update_webpage(request):
+    #webpage.objects.filter(topic_name='football').update(name='Ronaldo')
+    #webpage.objects.filter(name='Thomas').update(url='http://Steven.com/')
+    #webpage.objects.update_or_create(name='Rachel',defaults={'url':'http://manoj.com'})
+    t=topic.objects.get_or_create(topic_name='Rugbi')[0]
+    t.save()
+    webpage.objects.update_or_create(topic_name='Rugbi',defaults={'topic_name':t,'name':'Rugbi Star','url':'http://Ronaldo.com/'})
+
+    webapges=webpage.objects.all()
+    d={'ws':webapges}
+    return render(request,'display_webpage.html',d)
+
+def delete_webpage(request):
+    #webpage.objects.filter(name='Ronaldo').delete()
+    webpage.objects.all().delete()
+    webapges=webpage.objects.all()
+    d={'ws':webapges}
+    return render(request,'display_webpage.html',d)
+
+
